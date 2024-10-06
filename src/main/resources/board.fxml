@@ -53,3 +53,4 @@
         <Button text="Show Rules" onAction="#showRules"/>
     </HBox>
 </VBox>
+.
