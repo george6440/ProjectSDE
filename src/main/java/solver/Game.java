@@ -9,11 +9,11 @@ import java.util.Set;
  * The {@code Game} class represents a puzzle game where a player needs to arrange numbers on a board.
  * The board contains some fixed black boxes that cannot be moved or replaced.
  */
-public class Game {
+public class Game implements Cloneable{
     private static final Set<String> blackBoxes = new HashSet<>(Set.of(
             "0,0", "0,1", "0,2", "0,4", "0,6", "0,8", "0,9"
     ));
-    private char[][] board;
+    char[][] board;
     private int emptyRow;
     private int emptyCol;
     private int moves;
@@ -21,6 +21,15 @@ public class Game {
     public Game() {
         resetGame();
     }
+
+    // Constructor for testing purposes
+    public Game(char[][] board, int emptyRow, int emptyCol, int moves) {
+        this.board = board;
+        this.emptyRow = emptyRow;
+        this.emptyCol = emptyCol;
+        this.moves = moves;
+    }
+
 
     public void resetGame() {
         board = new char[][]{
