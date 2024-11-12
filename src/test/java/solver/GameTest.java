@@ -146,8 +146,11 @@ class GameTest {
     @Test
     void testClone() {
         Game clonedGame = game.clone();
-        System.out.println("Original game board: " + Arrays.deepToString(game.board));
-        System.out.println("Cloned game board: " + Arrays.deepToString(clonedGame.board));
+
+        //testing the logic of the clone function
+        //System.out.println("Original game board: " + Arrays.deepToString(game.board));
+        //System.out.println("Cloned game board: " + Arrays.deepToString(clonedGame.board));
+
         assertNotSame(game, clonedGame); // Ensure they are different objects
         assertEquals(game, clonedGame);  // Ensure their contents are equal
     }
