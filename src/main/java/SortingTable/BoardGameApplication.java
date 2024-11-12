@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class BoardGameApplication extends Application {
+
+    private Stage primaryStage;
+
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -22,5 +25,12 @@ public class BoardGameApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+
 }
