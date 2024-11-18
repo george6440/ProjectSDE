@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class BoardGameApplication extends Application {
 
-    private Stage primaryStage;
+    private static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) {
@@ -28,7 +28,7 @@ public class BoardGameApplication extends Application {
 
     }
 
-    public Stage getPrimaryStage() {
+    public static Stage getPrimaryStage() {
         return primaryStage;
     }
 
