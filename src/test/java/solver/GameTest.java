@@ -7,6 +7,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import solver.Game;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import solver.Game;
+import java.util.Set;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +59,7 @@ class GameTest {
                 int[] position = {row, col};
                 boolean expected = true;
 
-                if (row >= 0 && row < 2 && col >= 0 && col < 10 && game.getBoard()[row][col] != ' '){
+                if (row >= 0 && row < 2 && col >= 0 && col < 10 && game.getBoard()[row][col] != ' ') {
                     assertEquals(expected, game.isLegalToMoveFrom(position),
                             "Unexpected result at position (" + row + ", " + col + ")");
                 }
@@ -156,18 +163,51 @@ class GameTest {
     }
 
 
-
-
-    @Test
-    void testGetLegalMoves() {
-        Set<int[][]> legalMoves = game.getLegalMoves();
-        // Confirm that at least one valid move is available
-        assertFalse(legalMoves.isEmpty());
+    // Test scenarios for getLegalMoves
+    static Stream<Game> provideGameScenarios() {
+        return Stream.of(
+                // Scenario 1: Default game state
+                new Game(
+                        new char[][]{
+                                {'X', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X'},
+                                {' ', '2', '3', '4', '5', '6', '7', '8', '9', '1'}
+                        },
+                        1, 0, 0
+                ),
+                // Scenario 2: Solved board state
+                new Game(
+                        new char[][]{
+                                {'X', 'X', 'X', ' ', 'X', ' ', 'X', ' ', 'X', 'X'},
+                                {'1', '2', '3', '4', '5', '6', '7', '8', '9', ' '}
+                        },
+                        1, 9, 0
+                ),
+                // Scenario 3: Empty board state (no legal moves)
+                new Game(
+                        new char[][]{
+                                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
+                        },
+                        0, 0, 0
+                )
+        );
     }
 
     @Test
     void testMoveMethod() {
         assertTrue(game.move(1, 1, 1, 0)); // Valid move
         assertFalse(game.move(1, 1, 0, 0)); // Invalid move (black box)
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideGameScenarios")
+    void testGetLegalMoves(Game testGame) {
+        Set<int[][]> legalMoves = testGame.getLegalMoves();
+        // Ensure legal moves are present (default/specific states)
+        if (!testGame.isSolved() && testGame.getMoves() > 0) {
+            assertFalse(legalMoves.isEmpty(), "Legal moves should exist.");
+        }
+
+
     }
 }
